@@ -34,6 +34,22 @@ class ArticlesController < ApplicationController
     end 
   end
 
+  def edit 
+    # fetches the article from the database, and stores it in @article
+    # so that it can be used when building the form.
+    @article = Article.find(params[:id])
+  end
+
+  def update
+    @article = Article.find(params[:id])
+
+    if @article.update(article_params)
+      redirect_to @article 
+    else 
+      render :edit, status: :unprocessaable_entity
+    end
+  end
+
   private 
     def article_params
       # we will pass a single Hash that contains the values
