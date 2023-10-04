@@ -50,12 +50,19 @@ class ArticlesController < ApplicationController
     end
   end
 
+  def destroy
+    @article = Article.find(params[:id])
+    @article.destroy
+
+    redirect_to root_path, status: :see_other
+  end
+
   private 
     def article_params
       # we will pass a single Hash that contains the values
       # we must still specify what values are allowed in that Hash.
       # Caso contrário, um malicious user poderia submit extra form fields
       # and overwrite private data.
-      params.require(:articles).permit(:title, :body)
+      params.require(:article).permit(:title, :body)
     end
 end
